@@ -1,0 +1,35 @@
+name: Unit testing
+on:
+  pull_request:
+    branches:
+      - master
+
+env: 
+  RAILS_ENV: test
+
+jobs:
+  test: 
+    name: 2.7.1 - Unit testing
+    runs-on: ubuntu-latest
+    services: 
+      redis: 
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 30s
+          --health-timeout 5s
+          --health-retries 10
+        ports:
+          - 6379:6379
+          
+    steps: 
+      - name: Check out Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with: 
+          bundler-cache: true
+
+      - name: Run tests
+        run: bundle exec rspec

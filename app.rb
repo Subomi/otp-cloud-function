@@ -14,8 +14,6 @@ require './lib/serializers/otp_response_serializer'
 
 
 FunctionsFramework.on_startup do |function|
-  ActiveModelSerializers.config.serializer_lookup_enabled = true
-  
   # Setup Shared Redis Client
   require 'redis'
   set_global :redis_client, ConnectionPool.new(size: 5, timeout: 5) { Redis.new }

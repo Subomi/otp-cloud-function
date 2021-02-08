@@ -27,14 +27,16 @@ FunctionsFramework.http "otp" do |request|
   if  request.post? && request.path == '/otp'
     phone_number = data['phone_number']
     record = store.get(phone_number)
-    data = Models::OtpResponse.new(phone_number: phone_number,
-                                   otp: record['otp'],
-                                   expires_at: record['expires_at'])
-    json = Response.generate_json(status: true, 
-                         message: 'OTP previously sent',
-                         data: data)
+    unless record.nil? || record.expired?
+      data = Models::OtpResponse.new(phone_number: phone_number,
+                                     otp: record['otp'],
+                                     expires_at: record['expires_at'])
+      json = Response.generate_json(status: true, 
+                           message: 'OTP previously sent',
+                           data: data)
 
-    return json unless record.nil? || record.expired?
+      return json
+    end
 
     otp = rand(1111..9999)
     record = store.set(phone_number, otp)

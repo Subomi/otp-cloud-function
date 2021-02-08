@@ -17,6 +17,9 @@ gem 'connection_pool'
 # Time management
 gem 'activesupport'
 
+# API Serialization
+gem 'active_model_serializers', '~> 0.10.0'
+
 group :development, :test do
   gem 'pry', '~> 0.13.0'
   gem 'rspec'

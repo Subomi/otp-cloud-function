@@ -1,3 +1,5 @@
+require 'twilio-ruby'
+
 class SendSmsNotification
   def initialize(phone_number, otp)
     @phone_number = phone_number

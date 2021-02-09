@@ -40,15 +40,16 @@ FunctionsFramework.http "otp" do |request|
 
     otp = rand(1111..9999)
     record = store.set(phone_number, otp)
-    SendSmsNotification.new(phone_number, otp)
+    SendSmsNotification.new(phone_number, otp).call
 
     data = Models::OtpResponse.new(phone_number: phone_number,
                                    otp: record['otp'],
                                    expires_at: record['expires_at'])
 
-    json = Response.generate_json(status: true, 
+    Response.generate_json(status: true, 
                          message: 'OTP sent successfully',
                          data: data)
+
   elsif request.put? && request.path == '/otp/verify'
     phone_number = data['phone_number']
     record = store.get(phone_number)
@@ -73,7 +74,7 @@ FunctionsFramework.http "otp" do |request|
 
     otp = rand(1111..9999)
     record = store.set(phone_number, otp)
-    SendSmsNotification.new(phone_number, otp)
+    SendSmsNotification.new(phone_number, otp).call
 
     data = Models::OtpResponse.new(phone_number: phone_number,
                                    otp: record['otp'],
@@ -83,6 +84,7 @@ FunctionsFramework.http "otp" do |request|
                          message: 'OTP sent successfully',
                          data: data)
   else
-    "Error: Request method and path didn't match"
+    Response.generate_json(status: false,
+                           message: 'Request method and path did not match')
   end
 end

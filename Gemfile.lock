@@ -121,7 +121,7 @@ DEPENDENCIES
   connection_pool
   faker (~> 2.11.0)
   functions_framework (~> 0.7)
-  pry (~> 0.13.0)
+  pry
   redis
   rspec
   rspec_junit_formatter

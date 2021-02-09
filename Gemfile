@@ -21,7 +21,7 @@ gem 'activesupport'
 gem 'active_model_serializers', '~> 0.10.0'
 
 group :development, :test do
-  gem 'pry', '~> 0.13.0'
+  gem 'pry'
   gem 'rspec'
   gem 'rspec_junit_formatter'
   gem 'faker', '~> 2.11.0'

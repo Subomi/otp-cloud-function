@@ -5,6 +5,8 @@ on:
       - main
 jobs:
   deploy:
+    name: Function Deployment
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - id: deploy

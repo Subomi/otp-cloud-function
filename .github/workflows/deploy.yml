@@ -1,0 +1,14 @@
+name: Deployment
+on:
+  push:
+    branches:
+      - main
+steps:
+  - uses: actions/checkout@v2
+  - id: deploy
+    uses: google-github-actions/deploy-cloud-functions@main
+    with:
+      name: otp-cloud-function
+      runtime: ruby26
+      credentials: ${{ secrets.gcp_credentials }}
+      env_vars: ${{ "TWILIO_ACCOUNT_SID=${{ secrets.TWILIO_ACCOUNT_SID }},TWILIO_AUTH_TOKEN=${{ secrets.TWILIO_AUTH_TOKEN }},TWILIO_PHONE_NUMBER=${{ secrets.TWILIO_PHONE_NUMBER }},REDIS_URL=${{ secrets.REDIS_URL }}" }}

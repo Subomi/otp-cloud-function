@@ -1,0 +1,13 @@
+name: Deployment
+on:
+  push:
+    branches:
+      - main
+steps:
+  - uses: actions/checkout@v2
+  - id: deploy
+    uses: google-github-actions/deploy-cloud-functions@main
+    with:
+      name: otp-cloud-function
+      runtime: ruby26
+      credentials: ${{ secrets.gcp_credentials }}
